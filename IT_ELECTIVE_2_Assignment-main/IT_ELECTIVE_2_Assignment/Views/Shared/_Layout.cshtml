@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Portfolio</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body {
+            overflow-x: hidden;
+            background-color: #f8f9fa;
+        }
+
+    
+        html {
+            scroll-behavior: smooth;
+        }
+
+  
+        #sidebar-wrapper {
+            min-height: 100vh;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            background-color: #212529;
+        }
+
+        #page-content-wrapper {
+            width: 100%;
+            padding-left: 250px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-heading {
+            padding: 1.5rem 1rem;
+            font-size: 1.2rem;
+        }
+
+        .nav-link-custom {
+            padding: 1rem 1.5rem;
+            color: #adb5bd;
+            text-decoration: none;
+            display: block;
+            transition: 0.2s;
+        }
+
+        .nav-link-custom:hover {
+            color: #fff;
+            background-color: #343a40;
+        }
+
+      
+        @@media (max-width: 768px) {
+            #sidebar-wrapper {
+                width: 100%;
+                min-height: auto;
+                position: relative;
+            }
+            #page-content-wrapper {
+                padding-left: 0;
+            }
+            .navbar-toggler {
+                display: block !important;
+            }
+            .mobile-nav-header {
+                display: flex !important;
+                align-items: center;
+                justify-content: space-between;
+                padding: 1rem;
+                background-color: #212529;
+            }
+            #sidebar-menu {
+                display: none;
+            }
+            #sidebar-menu.show {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="d-flex flex-column flex-md-row" id="wrapper">
+ 
+        <nav id="sidebar-wrapper" class="text-white">
+     
+            <div class="mobile-nav-header d-none text-white">
+                <span class="fw-bold">My Portfolio</span>
+                <button class="btn btn-outline-light navbar-toggler" type="button" onclick="toggleMobileMenu()">
+                    <i class="bi bi-list fs-3"></i>
+                </button>
+            </div>
+
+         
+            <div id="sidebar-menu">
+                <div class="sidebar-heading border-bottom border-secondary text-center">
+                    <h5 class="m-0 fw-bold text-truncate text-white">My Portfolio</h5>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a asp-controller="Home" asp-action="Index" target="_blank" class="nav-link-custom" onclick="closeMobileMenu()"><i class="bi bi-house-door me-2"></i> Home</a>
+                    <a asp-controller="Home" asp-action="About" target="_blank" class="nav-link-custom" onclick="closeMobileMenu()"><i class="bi bi-person me-2"></i> About Me</a>
+                    <a asp-controller="Home" asp-action="Skills" target="_blank" class="nav-link-custom" onclick="closeMobileMenu()"><i class="bi bi-code-slash me-2"></i> Skills</a>
+                    <a asp-controller="Home" asp-action="Projects" target="_blank" class="nav-link-custom" onclick="closeMobileMenu()"><i class="bi bi-folder me-2"></i> Projects</a>
+                    <a asp-controller="Home" asp-action="Contact" target="_blank" class="nav-link-custom" onclick="closeMobileMenu()"><i class="bi bi-envelope me-2"></i> Contact</a>
+                </div>
+            </div>
+        </nav>
+
+       
+        <div id="page-content-wrapper">
+            <main role="main" class="container-fluid py-4 px-4 px-md-5">
+                @RenderBody()
+            </main>
+
+            <footer class="border-top footer text-muted bg-white py-3 text-center">
+                <div class="container-fluid">
+                    &copy; 2026 - Portfolio - <a asp-area="" asp-controller="Home" asp-action="Index" class="text-decoration-none">Home</a>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+       
+        function toggleMobileMenu() {
+            var menu = document.getElementById("sidebar-menu");
+            menu.classList.toggle("show");
+        }
+        function closeMobileMenu() {
+            if (window.innerWidth <= 768) {
+                var menu = document.getElementById("sidebar-menu");
+                menu.classList.remove("show");
+            }
+        }
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
